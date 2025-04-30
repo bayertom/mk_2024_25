@@ -88,7 +88,7 @@ R = (a_bes*sqrt(1-e2_bes))/(1-e2_bes*(sin(phi0))^2);
 
 %Gaussian conformal projection
 arg = 1/k * (tan(phi_bes/2 + pi/4) * ((1-sqrt(e2_bes)*sin(phi_bes))...
-                                    /(1+sqrt(e2_bes)*sin(phi_bes)))^(sqrt(e2_bes)/2))^alpha
+                                   / (1+sqrt(e2_bes)*sin(phi_bes)))^(sqrt(e2_bes)/2))^alpha
 u = 2*(atan(arg) - pi/4);
 v = alpha*la_fer;
 
@@ -109,13 +109,12 @@ eps = c*d;
 x_jtsk = Ro*cos(eps);
 y_jtsk = Ro*sin(eps);
 
-%Local linear scale
+%Local linear scale, 2 variants
 m1 = c*Ro/(R*cos(s));
-
-d_Ro = (Ro -Ro0)/100000
+d_Ro = (Ro - Ro0)/100000;
 m2 = 0.9999 + 0.00012282*d_Ro^2 - 0.00000315*d_Ro^3 + 0.00000018*d_Ro^4;
 
-%Convergence
+%Convergence, two variants
 c1 = 0.008257*y_jtsk/1000 + 2.373*(y_jtsk/x_jtsk)
 ksi = asin(cos(uk)*sin(pi-d)/cos(u))
 c2 = (eps - ksi)*180/pi;
@@ -164,19 +163,17 @@ eps = c*d;
 x_jtsk = Ro*cos(eps);
 y_jtsk = Ro*sin(eps);
 
-%Local linear scale
+%Local linear scale, 2 variants
 m1 = c*Ro/(R*cos(s));
-
-d_Ro = (Ro -Ro0)/100000
+d_Ro = (Ro - Ro0)/100000;
 m2 = 0.9999 + 0.00012282*d_Ro^2 - 0.00000315*d_Ro^3 + 0.00000018*d_Ro^4;
 
-%Convergence
+%Convergence, two variants
 c1 = 0.008257*y_jtsk/1000 + 2.373*(y_jtsk/x_jtsk)
 ksi = asin(cos(uk)*sin(pi-d)/cos(u))
 c2 = (eps - ksi)*180/pi;
+
 end
-
-
 
 function [x_jtsk, y_jtsk] = spheretojtsk(u, v)
 %Convert point (u, v)-> (y, x)_jtsk
@@ -201,14 +198,14 @@ eps = c*d;
 x_jtsk = Ro*cos(eps);
 y_jtsk = Ro*sin(eps);
 
-%Local linear scale
+%Local linear scale, 2 variants
 m1 = c*Ro/(R*cos(s));
-
-d_Ro = (Ro -Ro0)/100000
+d_Ro = (Ro - Ro0)/100000;
 m2 = 0.9999 + 0.00012282*d_Ro^2 - 0.00000315*d_Ro^3 + 0.00000018*d_Ro^4;
 
-%Convergence
+%Convergence, two variants
 c1 = 0.008257*y_jtsk/1000 + 2.373*(y_jtsk/x_jtsk)
 ksi = asin(cos(uk)*sin(pi-d)/cos(u))
 c2 = (eps - ksi)*180/pi;
+
 end
