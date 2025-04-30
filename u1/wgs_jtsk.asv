@@ -14,19 +14,8 @@ la1_wgs_rad = la1_wgs/180*pi
 phi2_wgs_rad = phi2_wgs/180*pi
 la2_wgs_rad = la2_wgs/180*pi
 
-%Convert point (phi, lam)_wgs-> (y, x)_jtsk
 [x1_jtsk, y1_jtsk] = wgstojtsk(phi1_wgs_rad,la1_wgs_rad)
 [x2_jtsk, y2_jtsk] = wgstojtsk(phi2_wgs_rad,la2_wgs_rad)
-
-%Compute distances
-
-%Convert point (phi, lam)_bess-> (y, x)_jtsk
-
-%Compute distances
-
-%Convert point (u, v) -> (y, x)_jtsk
-
-%Compute distances
 
 function [x_jtsk,y_jtsk] = wgstojtsk(phi_wgs,la_wgs)
 %Convert point (phi, lam)_wgs-> (y, x)_jtsk
@@ -75,7 +64,7 @@ phi_bes = atan(Z_bes/((1-e2_bes)*sqrt(X_bes^2+Y_bes^2)));
 la_bes = atan2(Y_bes, X_bes);
 
 %Reduction to Ferro
-la_fer = la_bes + (17 + 2/3)*pi/180;
+la_fer = la_bes + (17 + (2/3))*pi/180;
 
 %Constant values, Gaussian conformal projection
 phi0 =  49.5 * pi/180;
@@ -98,7 +87,7 @@ vk = (42 + 31/60 + 31.41725/3600) * pi/180;
 [s, d] = uv_sd(u, v, uk, vk);
 
 %LCC
-s0 = 78.5 * pi/180;
+s0 = 78.5 *pi/180;
 Ro0 = 0.9999 * R*1/tan(s0);
 c = sin(s0);
 
@@ -123,9 +112,8 @@ c2 = (eps - ksi)*180/pi;
 end
 
 function [x_jtsk, y_jtsk] = besstojtsk(phi_bes, la_bes)
-%Convert point (phi, lam)_bes-> (y, x)_jtsk
 %Reduction to Ferro
-la_fer = la_bes + (17 + 2/3)*pi/180;
+la_fer = la_bes + (17 + (2/3))*pi/180;
 
 %Parameters of Bessel
 a_bes = 6377397.155;
@@ -148,12 +136,12 @@ u = 2*(atan(arg) - pi/4);
 v = alpha*la_fer;
 
 %Transformation to oblique aspect
-uk = (59 + 42/60 + 42.6969/3600) * pi/180; 
-vk = (42 + 31/60 + 31.41725/3600) * pi/180;
+uk = (59+42/60+42.6969/3600) * pi/180; 
+vk = (42+31/60+31.41725/3600) * pi/180;
 [s, d] = uv_sd(u, v, uk, vk);
 
 %LCC
-s0 = 78.5 * pi/180;
+s0 = 78.5 *pi/180;
 Ro0 = 0.9999 * R*1/tan(s0);
 c = sin(s0);
 
@@ -179,18 +167,16 @@ end
 
 
 function [x_jtsk, y_jtsk] = spheretojtsk(u, v)
-%Convert point (u, v)-> (y, x)_jtsk
-
 %Reduction to Ferro
-v = v + (17 + 2/3)*pi/180;
+v = v + (17 + (2/3))*pi/180;
 
 %Transformation to oblique aspect
-uk = (59 + 42/60 + 42.6969/3600) * pi/180; 
-vk = (42 + 31/60 + 31.41725/3600) * pi/180;
+uk = (59+42/60+42.6969/3600) * pi/180; 
+vk = (42+31/60+31.41725/3600) * pi/180;
 [s, d] = uv_sd(u, v, uk, vk);
 
 %LCC
-s0 = 78.5 * pi/180;
+s0 = 78.5 *pi/180;
 Ro0 = 0.9999 * R*1/tan(s0);
 c = sin(s0);
 
