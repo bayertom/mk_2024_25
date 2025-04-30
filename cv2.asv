@@ -1,0 +1,71 @@
+clc
+clear
+format long g
+
+%Input points
+phi1_wgs = 50
+la1_wgs = 15
+phi2_wgs = 60
+la2_wgs = 20
+
+%Convert to radians
+phi1_wgs_rad = phi1_wgs/180*pi
+la1_wgs_rad = la1_wgs/180*pi
+phi2_wgs_rad = phi2_wgs/180*pi
+la2_wgs_rad = la2_wgs/180*pi
+
+[x1_jtsk, y1_jtsk] = wgstojtsk(phi1_wgs_rad,la1_wgs_rad)
+[x2_jtsk, y2_jtsk] = wgstojtsk(phi2_wgs_rad,la2_wgs_rad)
+
+function [x_jtsk,y_jtsk] = wgstojtsk(phi_wgs,la_wgs)
+
+%Parameters of WGS
+a_wgs = 6378137.0;
+b_wgs = 6356752.314245;
+
+%N
+e2_wgs = (a_wgs^2 - b_wgs^2) / a_wgs^2;
+W_wgs = sqrt(1-e2_wgs*sin(phi_wgs)^2);
+N_wgs = a_wgs/W_wgs;
+
+%X, Y, Z
+X_wgs = N_wgs * cos(phi_wgs) * cos(la_wgs);
+Y_wgs = N_wgs * cos(phi_wgs) * sin(la_wgs);
+Z_wgs = N_wgs * (1-e2_wgs) * sin(phi_wgs);
+
+%Shifts, rotations, scale
+om_x = 4.9984/3600*pi/180;
+om_y = 1.5867/3600*pi/180;
+om_z = 5.2611/3600*pi/180;
+
+m = 1-3.5623e-6;
+
+dx = -570.8285;
+dy = -85.6769;
+dz = -462.8420;
+
+%3D Helmert transformation: (X,Y,Z)_wgs -> (X,Y,Z)_bess
+R = [1 om_z -om_y; -om_z 1 om_x; om_y -om_x 1];
+XYZ_wgs = [X_wgs; Y_wgs; Z_wgs];
+XYZ_shift = [dx; dy; dz];
+
+XYZ_bes = m * R * XYZ_wgs + XYZ_shift;
+
+X_bes = XYZ_bes(1);
+Y_bes = XYZ_bes(2);
+Z_bes = XYZ_bes(3);
+
+%Parameters of Bessel
+a_bes = 6377397.155;
+b_bes = 6356078.963;
+
+e2_bes = (a_bes^2 - b_bes^2) / a_bes^2;
+W_bes = sqrt(1-e2_bes*sin(phi_bes)^2);
+N_bes = a_bes/W_bes;
+
+
+%(X,Y,Z)_bess -> (phi, la)_bess
+phi_bess = a
+
+
+end
