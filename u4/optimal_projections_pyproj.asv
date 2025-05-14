@@ -9,9 +9,9 @@ pyenv(Version="C:\Program Files\Python311\python.exe");
 
 %Projection properties
 proj_name = 'sinu'
-%proj_name = 'bonne';
+proj_name = 'bonne';
 %proj_name = 'eck5';
-%proj_name = 'wintri';
+proj_name = 'wintri';
 %proj_name = 'hammer';
 R = 6380000;
 lat1 = 50;
@@ -44,8 +44,8 @@ u0 = 50*pi/180;
 
 %Test: project + extract arrays from tuple and convert to matrix
 vals = py.mk.project(proj_name, R, py.numpy.array(ug  * 180/pi), py.numpy.array(vg*180/pi));
-x = double(vals{1});
-y = double(vals{2});
+XG = double(vals{1});
+YG = double(vals{2});
 a = double(vals{3});
 b = double(vals{4});
 
@@ -55,10 +55,10 @@ h2a = ((a - 1).^2 + (b-1).^2)/2;
 %Complex criterium (local)
 h2c = (abs(a-1)+abs(b-1))/2 + a./b-1;
 
-%Airy Criterium (global)
+%Airy criterium (global)
 H2a = mean(h2a(:))
 
-%Complex Criterium (global)
+%Complex criterium (global)
 H2c = mean(h2c(:))
 
 %Airy criterium (global, weighted)
@@ -67,7 +67,7 @@ num = sum(w.*h2a);
 den = sum(w);
 H2aw = num/den
 
-%Complex Criterium (global, weighted)
+%Complex criterium (global, weighted)
 w = cos(ug);
 num = sum(w.*h2c);
 den = sum(w);
@@ -88,9 +88,11 @@ plot(XA, YA, 'b');
 
 %Compute variable map scale
 M = 100000000;
-Muv = M/a;
+Muv = M./a;
 
 %Draw contour line
-dz = 10000000;
-[C, h] = contour(x, y, Muv,[-20:dz:100], 'LineColor', 'r');
-clabel(C, h,'Color', 'red');
+Mmin = 10000000;
+Mmax = 100000000;
+dM = 10000000;
+[C, h] = contour(XG, YG, Muv, [Mmin:dM:Mmax], 'LineColor', 'r');
+clabel(C, h,'Color', 'red'); 
