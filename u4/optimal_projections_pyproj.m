@@ -8,11 +8,11 @@ format long
 pyenv(Version="C:\Program Files\Python311\python.exe");
 
 %Projection properties
-%proj_name = 'sinu'
+proj_name = 'sinu'
 proj_name = 'bonne';
-proj_name = 'eck5';
+%proj_name = 'eck5';
 proj_name = 'wintri';
-proj_name = 'hammer';
+%proj_name = 'hammer';
 R = 6380000;
 lat1 = 50;
 R = 6380000;
@@ -35,14 +35,17 @@ Du = 10*pi/180;
 Dv = 10*pi/180;
 du = 0.1 * Du;
 dv = 0.1 * Dv;
+uk = pi/2;
+vk = 0;
+u0 = 50*pi/180;
 
 %Mesh grid
 [ug, vg] = meshgrid(umin:du:umax, vmin:dv:vmax);
 
 %Test: project + extract arrays from tuple and convert to matrix
 vals = py.mk.project(proj_name, R, py.numpy.array(ug  * 180/pi), py.numpy.array(vg*180/pi));
-x = double(vals{1});
-y = double(vals{2});
+XG = double(vals{1});
+YG = double(vals{2});
 a = double(vals{3});
 b = double(vals{4});
 
@@ -70,5 +73,26 @@ num = sum(w.*h2c);
 den = sum(w);
 H2cw = num/den
 
+%Graticule
+[XM, YM, XP, YP] = graticule_proj(umin-10*pi/180, umax+10*pi/180, vmin, vmax, Du, Dv, du, dv, R, uk, vk, u0, proj_name);
+plot(XM', YM', 'k');    
+plot(XP', YP', 'k');
 
+%Load continents
+A = load("amer.txt");
+vals = py.mk.project(proj_name, R, A(:,1), A(:,2))
+XA = double(vals{1});
+YA = double(vals{2});
 
+plot(XA, YA, 'b');
+
+%Compute variable map scale
+M = 100000000;
+Muv = M./a;
+
+%Draw contour line
+Mmin = 10000000;
+Mmax = 100000000;
+dM = 10000000;
+[C, h] = contour(XG, YG, Muv,[Mmin:dM:Mmax], 'LineColor', 'r');
+clabel(C, h,'Color', 'red');
