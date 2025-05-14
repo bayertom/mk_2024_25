@@ -15,7 +15,7 @@ for v = vmin:Dv:vmax
     [sm, dm] = uv_sd(um, vm, uk, vk);
 
     %Compute xm, ym
-    [xm, ym] = proj(R, sm, dm, 0)
+    [xm, ym] = proj(R, sm, dm, u0);
 
     %Add meridian to the list
     XM = [XM; xm];
@@ -36,7 +36,7 @@ for u = umin:Du:umax
     [sp, dp] = uv_sd(up, vp, uk, vk);
 
     %Compute xp, yp
-    [xp, yp] = proj(R, sp, dp, 0)
+    [xp, yp] = proj(R, sp, dp, u0);
 
     %Add parellel to the list
     XP = [XP; xp];
