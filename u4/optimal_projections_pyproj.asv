@@ -58,17 +58,20 @@ H2a = mean(h2a(:))
 %Complex Criterium (global)
 H2c = mean(h2c(:))
 
+
 %Airy criterium (global, weighted)
 w = cos(ug);
 num = sum(w.*h2a);
 den = sum(w);
 H2aw = num/den
 
+
 %Complex Criterium (global, weighted)
 w = cos(ug);
-num = sum(w.*h2c);
+num = sum(w.*h2a);
 den = sum(w);
-H2cw = num/den
+H2aw = num/den
+%complex_crit_w = mean(h2c(:))
 
 
 

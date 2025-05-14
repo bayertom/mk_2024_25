@@ -1,7 +1,7 @@
 from numpy import *
 from pyproj import *
 
-def project(proj_name,R_z,u,v):
+def project(proj_name, R_z, u, v):
     # Create new projection
     my_proj =  Proj(proj=proj_name, R=R_z, lat_1=50)
 
