@@ -50,7 +50,7 @@ b = double(vals{4});
 h2a = ((a - 1).^2 + (b-1).^2)/2;
 
 %Complex criterium (local)
-h2c = (abs(a-1)+abs(b-1))/2+a./b-1;
+h2c = (abs(a-1)+abs(b-1))/2 + a./b-1;
 
 %Airy Criterium (global)
 H2a = mean(h2a(:))
